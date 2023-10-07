@@ -8,10 +8,10 @@ export interface ChatApiClient {
 
 export class ChatApiClientProxy implements ChatApiClient {
 
-    impl: ChatApiClient
+    impl: ChatApiClient | undefined
 
     send(msg:Message) {
-        this.impl.send(msg)
+        this.impl?.send(msg)
     }
 
 }
