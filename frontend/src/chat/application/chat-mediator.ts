@@ -2,12 +2,12 @@ import {html, css, LitElement, PropertyValues} from 'lit'
 import {customElement, property, state} from 'lit/decorators.js'
 import './components/chat-received'
 import './components/chat-form'
-import {State} from "../domain/centralState";
+import {State} from "../domain/model/centralState";
 import {upstream} from "../domain/upstream";
 import {service} from "../domain/Service";
 import {chatApiClient} from "../domain/apiClients/chatApiClient";
 import {AtmosphereChatApiClient} from "../infra/atmosphereChatApiClient";
-import {msgStream} from "../domain/streams";
+import {msgStream} from "../domain/streams/domainStreams";
 import {Message} from "../domain/model/Message";
 import {SocketIOChatApiClient} from "../infra/socketioChatApiClient";
 import {CustomChatApiClient} from "../infra/customChatApiClient";

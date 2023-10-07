@@ -1,4 +1,4 @@
-import {Message} from "./model/Message";
+import {Message} from "./Message";
 
 export class State {
     messages: Message[] = [];

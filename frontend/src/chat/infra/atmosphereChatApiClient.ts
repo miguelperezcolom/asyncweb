@@ -2,7 +2,7 @@ import {ChatApiClient} from "../domain/apiClients/chatApiClient";
 import {Message} from "../domain/model/Message";
 import Response = Atmosphere.Response;
 import Request = Atmosphere.Request;
-import {connectedStream, errorStream, msgStream} from "../domain/streams";
+import {connectedStream, errorStream, msgStream} from "../domain/streams/domainStreams";
 
 
 export class AtmosphereChatApiClient implements ChatApiClient {

@@ -1,4 +1,4 @@
 import {Subject} from "rxjs";
-import {State} from "./centralState";
+import {State} from "./model/centralState";
 
 export const upstream: Subject<State> = new Subject()

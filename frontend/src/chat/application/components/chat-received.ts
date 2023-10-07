@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit'
 import {customElement, property} from 'lit/decorators.js'
-import {State} from "../../domain/centralState";
+import {State} from "../../domain/model/centralState";
 
 /**
  * An example element.
