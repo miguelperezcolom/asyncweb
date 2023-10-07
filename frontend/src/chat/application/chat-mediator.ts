@@ -11,6 +11,7 @@ import {msgStream} from "../domain/streams/domainStreams";
 import {Message} from "../domain/model/Message";
 import {SocketIOChatApiClient} from "../infra/socketioChatApiClient";
 import {CustomChatApiClient} from "../infra/customChatApiClient";
+import {receiveMessageCommandHandler} from "../domain/commands/receiveMessage/ReceiveMessageCommandHandler";
 
 /**
  * An example element.
@@ -61,9 +62,9 @@ export class ChatMediator extends LitElement {
     })
 
     msgStream.subscribe((msg: Message) => {
-      const state = {...this.state}
-      state.messages = [...state.messages, msg]
-      upstream.next(state)
+      receiveMessageCommandHandler.handle({
+        message: msg
+      })
     })
 
   }

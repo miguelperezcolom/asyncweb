@@ -1,5 +1,5 @@
 import {SendMessageCommand} from "./SendMessageCommand";
-import {chatApiClient} from "../apiClients/chatApiClient";
+import {chatApiClient} from "../../apiClients/chatApiClient";
 
 export class SendMessageCommandHandler {
 

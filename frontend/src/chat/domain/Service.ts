@@ -1,5 +1,5 @@
 import {Message} from "./model/Message";
-import {sendMessageCommandHandler} from "./commands/SendMessageCommandHandler";
+import {sendMessageCommandHandler} from "./commands/sendMessage/SendMessageCommandHandler";
 
 export class Service {
 
