@@ -6,4 +6,7 @@ export class CustomChatApiClient implements ChatApiClient {
         console.log('would be sending', msg)
     }
 
+    unbind(): void {
+    }
+
 }

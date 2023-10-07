@@ -4,6 +4,8 @@ export interface ChatApiClient {
 
     send(msg: Message): void
 
+    unbind(): void
+
 }
 
 export class ChatApiClientProxy implements ChatApiClient {
@@ -12,6 +14,10 @@ export class ChatApiClientProxy implements ChatApiClient {
 
     send(msg:Message) {
         this.impl?.send(msg)
+    }
+
+    unbind(): void {
+        this.impl?.unbind()
     }
 
 }

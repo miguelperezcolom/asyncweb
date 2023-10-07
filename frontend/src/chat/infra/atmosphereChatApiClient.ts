@@ -4,7 +4,6 @@ import Response = Atmosphere.Response;
 import Request = Atmosphere.Request;
 import {connectedStream, errorStream, msgStream} from "../domain/streams/domainStreams";
 
-
 export class AtmosphereChatApiClient implements ChatApiClient {
 
     socket: WebSocket | undefined
@@ -52,6 +51,12 @@ export class AtmosphereChatApiClient implements ChatApiClient {
             console.log('NOT sending', raw)
         }
 
+    }
+
+    unbind(): void {
+        if (atmosphere && atmosphere.unsubscribe) {
+            atmosphere.unsubscribe()
+        }
     }
 
 }

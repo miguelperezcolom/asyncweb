@@ -1,5 +1,6 @@
 import {html, css, LitElement, PropertyValues} from 'lit'
 import {customElement, property, state} from 'lit/decorators.js'
+import './components/chat-implementation-selector'
 import './components/chat-received'
 import './components/chat-form'
 import {State} from "../domain/model/centralState";
@@ -39,6 +40,7 @@ export class ChatMediator extends LitElement {
 
   private updateImplementation(implementation: string) {
     console.log('setting implementation to', implementation)
+    chatApiClient.impl?.unbind()
     if ('atmosphere' == implementation) {
       chatApiClient.impl = new AtmosphereChatApiClient()
     } else if ('socketio' == implementation) {
@@ -69,12 +71,23 @@ export class ChatMediator extends LitElement {
 
   }
 
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    upstream.unsubscribe()
+    msgStream.unsubscribe()
+  }
+
   send(event: CustomEvent) {
     service.send(event.detail)
   }
 
+  changeImplementation(event: CustomEvent) {
+    this.updateImplementation(event.detail)
+  }
+
   render() {
     return html`
+      <chat-implementation-selector @change-implementation="${this.changeImplementation}"></chat-implementation-selector>
       <chat-received .state="${this.state}"></chat-received>
       <chat-form @send="${this.send}"></chat-form>
     `
