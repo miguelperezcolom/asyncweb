@@ -15,8 +15,8 @@ interface Message {
  * @slot - This element has a slot
  * @csspart button - The button
  */
-@customElement('atmosphere-chat')
-export class AtmosphereChat extends LitElement {
+@customElement('chat-all')
+export class ChatAll extends LitElement {
   static styles = css`
     :host {
       display: block;
@@ -100,6 +100,6 @@ export class AtmosphereChat extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'atmosphere-chat': AtmosphereChat
+    'chat-all': ChatAll
   }
 }
