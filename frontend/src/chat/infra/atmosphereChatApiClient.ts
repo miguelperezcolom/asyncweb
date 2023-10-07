@@ -14,7 +14,7 @@ export class AtmosphereChatApiClient implements ChatApiClient {
         var socket = atmosphere;
         console.log('socket', socket)
         const request: Request = {
-            url: 'http://localhost:8080/chat',
+            url: 'http://atmosphere.mateu.io/chat',
             contentType : "application/json",
             logLevel : 'debug',
             transport : 'websocket' ,
