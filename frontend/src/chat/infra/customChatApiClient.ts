@@ -6,7 +6,4 @@ export class CustomChatApiClient implements ChatApiClient {
         console.log('would be sending', msg)
     }
 
-    subscribe(): void {
-    }
-
 }

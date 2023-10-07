@@ -1,12 +1,57 @@
 import {ChatApiClient} from "../domain/apiClients/chatApiClient";
 import {Message} from "../domain/model/Message";
+import Response = Atmosphere.Response;
+import Request = Atmosphere.Request;
+import {connectedStream, errorStream, msgStream} from "../domain/streams";
+
 
 export class AtmosphereChatApiClient implements ChatApiClient {
-    send(msg: Message): void {
-        console.log('would be sending', msg)
+
+    socket: WebSocket | undefined
+    subsocket: Request | undefined
+
+    constructor() {
+
+        var socket = atmosphere;
+        console.log('socket', socket)
+        const request: Request = {
+            url: 'http://localhost:8080/chat',
+            contentType : "application/json",
+            logLevel : 'debug',
+            transport : 'websocket' ,
+            fallbackTransport: 'long-polling'};
+
+        request.onOpen = (response?: Response) => {
+            console.log('opened', response)
+            connectedStream.next(response)
+        }
+        request.onMessage = (response: Response) => {
+            console.log('response', response)
+            msgStream.next({
+                author: 'yo',
+                message: '' + response.responseBody,
+                time: 1
+            })
+        }
+        request.onError = (response?: Response) => {
+            console.log('error', response)
+            errorStream.next(response)
+        }
+        if (socket && socket.subscribe) {
+            this.subsocket = socket.subscribe(request);
+        }
+
     }
 
-    subscribe(): void {
+    send(msg: Message): void {
+        const raw = JSON.stringify(msg)
+        if (this.subsocket && this.subsocket.push) {
+            console.log('sending', raw)
+            this.subsocket.push(raw)
+        } else {
+            console.log('NOT sending', raw)
+        }
+
     }
 
 }
