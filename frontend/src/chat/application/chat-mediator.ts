@@ -1,6 +1,7 @@
-import { html, css, LitElement } from 'lit'
+import {html, css, LitElement, PropertyValues} from 'lit'
 import {customElement, property, state} from 'lit/decorators.js'
-import './chat-all'
+import './components/chat-received'
+import './components/chat-form'
 import {State} from "../domain/centralState";
 import {upstream} from "../domain/upstream";
 import {service} from "../domain/Service";
@@ -8,6 +9,8 @@ import {chatApiClient} from "../domain/apiClients/chatApiClient";
 import {AtmosphereChatApiClient} from "../infra/atmosphereChatApiClient";
 import {msgStream} from "../domain/streams";
 import {Message} from "../domain/model/Message";
+import {SocketIOChatApiClient} from "../infra/socketioChatApiClient";
+import {CustomChatApiClient} from "../infra/customChatApiClient";
 
 /**
  * An example element.
@@ -25,6 +28,27 @@ export class ChatMediator extends LitElement {
 
   @state()
   state: State = new State()
+
+  protected updated(_changedProperties: PropertyValues) {
+    super.updated(_changedProperties);
+    if (_changedProperties.has('implementation') && _changedProperties.get('implementation')) {
+      this.updateImplementation(this.implementation)
+    }
+  }
+
+  private updateImplementation(implementation: string) {
+    console.log('setting implementation to', implementation)
+    if ('atmosphere' == implementation) {
+      chatApiClient.impl = new AtmosphereChatApiClient()
+    } else if ('socketio' == implementation) {
+      chatApiClient.impl = new SocketIOChatApiClient()
+    } else if ('custom' == implementation) {
+      chatApiClient.impl = new CustomChatApiClient()
+    } else {
+      console.error('unknown implementation ', implementation)
+      console.log('valid implementations are atmosphere, socketio or custom')
+    }
+  }
 
 
   connectedCallback() {
@@ -50,7 +74,8 @@ export class ChatMediator extends LitElement {
 
   render() {
     return html`
-      <chat-all .state="${this.state}" @send="${this.send}"></chat-all>
+      <chat-received .state="${this.state}"></chat-received>
+      <chat-form @send="${this.send}"></chat-form>
     `
   }
 

@@ -1,10 +1,12 @@
-import {chatApiClient} from "./apiClients/chatApiClient";
 import {Message} from "./model/Message";
+import {sendMessageCommandHandler} from "./commands/SendMessageCommandHandler";
 
 export class Service {
 
     send(msg: Message) {
-        chatApiClient.send(msg)
+        sendMessageCommandHandler.handle({
+            message: msg
+        })
     }
 
 }

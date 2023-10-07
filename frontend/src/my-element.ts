@@ -1,6 +1,6 @@
 import { html, css, LitElement } from 'lit'
 import { customElement} from 'lit/decorators.js'
-import './chat/application/chat-mediator'
+import './chat/application/chat-app'
 /**
  * An example element.
  *
@@ -21,9 +21,9 @@ export class MyElement extends LitElement {
 
   render() {
     return html`
-      <h2>Chat demo</h2>
+      <h1>Chat demo</h1>
       
-      <chat-mediator></chat-mediator>
+      <chat-app></chat-app>
       
       
     `
